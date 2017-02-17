@@ -1,9 +1,13 @@
-#=======Cahier des charges du projet Taptap=======
+#=======Cahier des charges du projet Tauptaup=======
 
 ## Introduction
 
-Le projet lancé par notre groupe s'intitule le projet Taptap.
-Il aura pour but la création d'un petit jeu du même genre que le Chasse Taupes.
+Le projet lancé par notre groupe s'intitule "Tauptaup".
+Il aura pour but la création d'un petit jeu similaire au Chasse Taupes.
+L'utilisateur arrivera sur un écran en rentrant l'adresse du serveur et choisira un pseudo. 
+Il va ensuite pouvoir jouer au jeu et taper sur les taupes affichées à l'écran à l'aide des boutons connectés à l'Arduino.
+Son score va grimper au fur et à mesure qu'il tape des taupes et sera affiché sur le petit écran connecté à l'Arduino.
+
 
 ### Technologies utilisées
 
