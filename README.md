@@ -15,18 +15,23 @@ Son score va grimper au fur et à mesure qu'il tape des taupes et sera affiché 
 - Web(node.js/HTML) : La partie web gèrera le serveur web et l'hébergement du client.
 
 
+#=======Gestion des tâches======
+
+- Rédaction du cahier des charges : Nicolas.
 
 ## ======Spécificités Software======
 
 
-### Développement applicatif
+### Développement applicatif (Jérémie et Nicolas)
 
-- Création du serveur web.
+- Création du serveur web. 
 - Création de la page web envoyée au client.
 - Récupération des états des boutons et association avec le tableau de taupes.
 - Gestion de l'apparition aléatoire des taupes (tableau).
 - Gestion du scoring.
 - (OPTIONNEL) Ajout d'un système multijoueurs.
+
+
 
 ## ======Spécificités Hardware======
 
@@ -42,8 +47,9 @@ Son score va grimper au fur et à mesure qu'il tape des taupes et sera affiché 
 
 - Branchement du matériel sur le Arduino
 
-# Développement applicatif
+### Développement applicatif (Victor et Guillaume)
 
 - Gestion des états des 16 boutons.
 - Gestion de listeners pour le score/les messages envoyés par le serveur.
+
 
