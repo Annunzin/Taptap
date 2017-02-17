@@ -1,4 +1,4 @@
-**=======Cahier des charges du projet Taptap=======**
+#=======Cahier des charges du projet Taptap=======
 
 ## Introduction
 
