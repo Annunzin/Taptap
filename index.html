@@ -23,29 +23,10 @@
 <script src="/socket.io/socket.io.js"></script>
 <script src="/serialport/serialport.js"></script>
 <script >
-    var SerialPort = require('serialport')
+    //var SerialPort = require('serialport')
     var socket = io.connect('http://172.26.123.1:8080');
     socket.on('message', function(message) {
         alert('/!\ Réponse du serveur : ' + message);
-        	serialPort = new SerialPort('COM3', { //portName ?
-            baudrate: 9600,
-            // defaults for Arduino serial communication
-             dataBits: 8, 
-             parity: 'none', 
-             stopBits: 1, 
-             flowControl: false 
-        });
-        serialPort.on("open", function () {
-          console.log('open serial communication');
-             // Listens to incoming data
-            serialPort.on('btnPress', function(btnID) { 
-                 console.log("Button " + btnID + " pressed");
-                 if (btnID > 0) {
-                 // save the data between 'B' and 'E'
-                 socketServer.emit('updateScore', 'ZOB' );
-                 }
-            });  
-        });  
     });
     socket.on('addPlayer', function(pseudo) {
         var content = "<tr><th>" + pseudo +"</th><th>0</th></tr>";
