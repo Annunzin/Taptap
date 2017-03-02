@@ -38,25 +38,6 @@ io.sockets.on('connection', function (socket) {
     socket.on('newPlayer', function (joueur) {
         console.log('Le joueur ' + joueur + ' a rejoinds la partie !');
         
-         serialPort = new SerialPort('COM3', { //portName ?
-            baudrate: 9600,
-            // defaults for Arduino serial communication
-             dataBits: 8, 
-             parity: 'none', 
-             stopBits: 1, 
-             flowControl: false 
-        });
-        serialPort.on("open", function () {
-            console.log('open serial communication');
-            // Listens to incoming data
-            serialPort.on('btnPress', function(btnID) { 
-                console.log("Button " + btnID + " pressed");
-                if (btnID > 0) {
-                // save the data between 'B' and 'E'
-                socketServer.emit('updateScore', 'ZOB' );
-                }
-            });  
-        }); 
         
         socket.emit('addPlayer', joueur);
     }); 
