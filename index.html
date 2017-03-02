@@ -17,22 +17,26 @@
                <th>Score</th>
            </tr>
         </table>
+        <img src="images/photo.png"/>
+        
     </body>
 </html>
 
 <script src="/socket.io/socket.io.js"></script>
 <script >
     //var SerialPort = require('serialport')
+
     var socket = io.connect('http://172.26.123.1:8080');
     socket.on('message', function(message) {
-        alert('/!\ Réponse du serveur : ' + message);
+        //~ alert('/!\ Réponse du serveur : ' + message);
+        console.log("Message du serveur : " + message)
     });
     socket.on('addPlayer', function(pseudo) {
         var content = "<tr><th>" + pseudo +"</th><th>0</th></tr>";
         document.getElementById("rankPlayer").innerHTML += content;
     });
     
-
+    
     
     clickPseudo = function () {
         console.log("click joueur");

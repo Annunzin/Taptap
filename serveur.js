@@ -5,8 +5,15 @@ var SerialPort = require('serialport')
 portName = process.argv[2];
 // Chargement du fichier index.html affiché au client
 
-var server = http.createServer(function(req, res) {
+var express = require('express');
+var app = express();
+server = require('http').createServer(app),
 
+io = require('socket.io').listen(server);
+
+app.get('/', function(req, res) {
+    console.log(req)
+    console.log("ok")
     fs.readFile('./index.html', 'utf-8', function(error, content) {
 
         res.writeHead(200, {"Content-Type": "text/html"});
@@ -14,13 +21,24 @@ var server = http.createServer(function(req, res) {
         res.end(content);
 
     });
-
 });
+
+app.get('/images/:photo', function(req, res) {
+ 
+    fs.readFile('./images/' +req.params.photo, function(error, content) {
+
+        res.writeHead(200, {"Content-Type": "text/html"});
+
+        res.end(content);
+
+    });
+});
+
+app.listen(8080);
 
 
 // Chargement de socket.io
 
-var io = require('socket.io').listen(server);
 
 
 // Quand un client se connecte, on le note dans la console
@@ -91,8 +109,3 @@ io.sockets.on('connection', function (socket) {
     }); 
 });
 
-
-
-
-
-server.listen(8080);
