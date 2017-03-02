@@ -37,8 +37,56 @@ io.sockets.on('connection', function (socket) {
     }); 
     socket.on('newPlayer', function (joueur) {
         console.log('Le joueur ' + joueur + ' a rejoinds la partie !');
+        var port = new SerialPort('COM3',{
+            baudrate: 57600
+            });
+
+        port.on('open', function() {
+          port.write('main screen turn on', function(err) {
+            if (err) {
+              return console.log('Error on write: ', err.message);
+            }
+            console.log('message written');
+          });
+        });
+
+        port.on('data',function(data){
+            console.log('data received : ');
+            console.log(data);
+        });
         
-        
+        port.on('disconnect', function(disc){
+            console.log("Deconnexion");
+            console.log(disc);
+        });
+        port.on('close', function(close){
+            console.log("CLOSED");
+            console.log(close);
+        });
+        // open errors will be emitted as an error event
+        port.on('error', function(err) {
+          console.log('Error:: ', err.message);
+        })
+        //~ serialPort = new SerialPort('COM3', { //portName ?
+            //~ baudrate: 9600,
+            //~ // defaults for Arduino serial communication
+             //~ dataBits: 8, 
+             //~ parity: 'none', 
+             //~ stopBits: 1, 
+             //~ flowControl: false 
+        //~ });
+        //~ serialPort.on("open", function () {
+            //~ console.log('open serial communication');
+            //~ // Listens to incoming data
+            //~ serialPort.on('btnPress', function(btnID) { 
+                //~ console.log("Button " + btnID + " pressed");
+                //~ if (btnID > 0) {
+                //~ // save the data between 'B' and 'E'
+                //~ socketServer.emit('updateScore', 'ZOB' );
+                //~ }
+            //~ });  
+        //~ }); 
+        //~ 
         socket.emit('addPlayer', joueur);
     }); 
 });
