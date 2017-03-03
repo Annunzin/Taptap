@@ -1,49 +1,44 @@
 var http = require('http');
-
+var path = require('path');
 var fs = require('fs');
-var SerialPort = require('serialport')
-portName = process.argv[2];
+var SerialPort = require('serialport');
+var express = require('express');
+var io = require('socket.io');
+
+//var portName = process.argv[2];
 // Chargement du fichier index.html affiché au client
 
-var express = require('express');
 var app = express();
-server = require('http').createServer(app),
+//app.use(express.static(path.join(__dirname, 'public')));
+var server = http.createServer(app);
 
-io = require('socket.io').listen(server);
 
 app.get('/', function(req, res) {
-    console.log(req)
-    console.log("ok")
     fs.readFile('./index.html', 'utf-8', function(error, content) {
-
         res.writeHead(200, {"Content-Type": "text/html"});
-
         res.end(content);
-
     });
 });
 
 app.get('/images/:photo', function(req, res) {
- 
     fs.readFile('./images/' +req.params.photo, function(error, content) {
-
-        res.writeHead(200, {"Content-Type": "text/html"});
-
+        res.writeHead(200, {"Content-Type": "image/png"});
         res.end(content);
-
     });
 });
 
-app.listen(8080);
 
+
+server.listen(8080);
 
 // Chargement de socket.io
+var io2 = io.listen(server);
 
 
 
 // Quand un client se connecte, on le note dans la console
 
-io.sockets.on('connection', function (socket) {
+io2.sockets.on('connection', function (socket) {
     console.log('Un client est connecté !');
     
    
@@ -56,7 +51,7 @@ io.sockets.on('connection', function (socket) {
     socket.on('newPlayer', function (joueur) {
         console.log('Le joueur ' + joueur + ' a rejoinds la partie !');
         var port = new SerialPort('COM3',{
-            baudrate: 57600
+            baudrate: 9600
             });
 
         port.on('open', function() {
