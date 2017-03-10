@@ -1,0 +1,70 @@
+
+h1{
+	background: url("../images/title.png") no-repeat center center;
+	text-align:center;
+	height:60px;
+}
+#table-game {
+	margin-left: 25%;
+height: 450px;
+width: 450px;
+
+}
+
+img{
+	
+	
+	width:150px;
+	height:150px;
+}
+
+body{
+	background-image: url( "../images/dirt.jpg");
+	background-size: 50% 100%;	
+}
+
+.dirt {
+	position: fixed;
+	overflow: hidden;
+	width: 10%;
+	height: 100%;
+	z-index: -1;
+}
+
+div.grass {
+	position: fixed;
+	bottom: 0;
+	margin-left: -8px;
+	height: 90px;
+	display: inline-table;
+	background: url("../images/grass.png");
+	background-size: 295px 90px;
+	width: 100%
+}
+div.title {
+	position: fixed;
+	top: 0;
+	height: 90px;
+	display: inline-table;
+	background-size: 295px 90px;
+	width: 100%
+}
+
+
+#bd1{
+	left: 0;
+}
+#bd2{
+	right: 0;
+}
+html {
+  height: 100%;
+}
+body {
+  min-height: 97%;
+}
+
+.container {
+	z-index: 100;
+	text-align: center;
+}

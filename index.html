@@ -4,11 +4,14 @@
     <head>
         <meta charset="utf-8" />
         <title>Socket.io</title>
+        <link rel="stylesheet" type="text/css" href="css/style.css"> 
+
     </head>
 
     <body>
-        <h1>Bienvenue dans le jeu du Tauptaup !</h1>
-
+        <h1 class="title"> </h1>
+		<div class="container">
+		
         <select id="difficulty">
           <option value="0">Petite bouze</option>
           <option value="3000">Taupe de jardin</option>
@@ -18,34 +21,37 @@
         <p id='score'>Score : 0</p>
         <button onclick="clickJouer()" id="btnJouer">Jouer !</button>
         
-        <table id="rankPlayer" visible='false'>
+        <table id="table-game">
            <tr>
-               <th><img id="img1" src="images/rondBleu.png"/></th>
-               <th><img id="img2" src="images/rondBleu.png"/></th>
-               <th><img id="img3" src="images/rondBleu.png"/></th>
-               <th><img id="img4" src="images/rondBleu.png"/></th>
+               <th><img id="img1" src="images/hole.png"/></th>
+               <th><img id="img2" src="images/hole.png"/></th>
+               <th><img id="img3" src="images/hole.png"/></th>
+               <th><img id="img4" src="images/hole.png"/></th>
            </tr>
             <tr>
-               <th><img id="img5" src="images/rondBleu.png"/></th>
-               <th><img id="img6" src="images/rondBleu.png"/></th>
-               <th><img id="img7" src="images/rondBleu.png"/></th>
-               <th><img id="img8" src="images/rondBleu.png"/></th>
+               <th><img id="img5" src="images/hole.png"/></th>
+               <th><img id="img6" src="images/hole.png"/></th>
+               <th><img id="img7" src="images/hole.png"/></th>
+               <th><img id="img8" src="images/hole.png"/></th>
            </tr>
             <tr>
-               <th><img id="img9" src="images/rondBleu.png"/></th>
-               <th><img id="img10" src="images/rondBleu.png"/></th>
-               <th><img id="img11" src="images/rondBleu.png"/></th>
-               <th><img id="img12" src="images/rondBleu.png"/></th>
+               <th><img id="img9" src="images/hole.png"/></th>
+               <th><img id="img10" src="images/hole.png"/></th>
+               <th><img id="img11" src="images/hole.png"/></th>
+               <th><img id="img12" src="images/hole.png"/></th>
            </tr>
             <tr>
-               <th><img id="img13" src="images/rondBleu.png"/></th>
-               <th><img id="img14" src="images/rondBleu.png"/></th>
-               <th><img id="img15" src="images/rondBleu.png"/></th>
-               <th><img id="img16" src="images/rondBleu.png"/></th>
+               <th><img id="img13" src="images/hole.png"/></th>
+               <th><img id="img14" src="images/hole.png"/></th>
+               <th><img id="img15" src="images/hole.png"/></th>
+               <th><img id="img16" src="images/hole.png"/></th>
            </tr>
         </table>
-        <img src="images/photo.png"/>
+        </div>
         
+        <div class="grass">
+			
+		</div>
     </body>
 </html>
 
@@ -61,9 +67,9 @@
 
     socket.on('newValue', function(value){
        console.log("Nouvelle valeur : "+ value); 
-       document.images["img" + actualValue].src = "images/rondBleu.png";
+       document.images["img" + actualValue].src = "images/hole.png";
        actualValue = value;
-       document.images["img" + value].src = "images/rondRouge.png";
+       document.images["img" + value].src = "images/holeTaup.png";
     });
     socket.on('newScore', function(score){
         document.getElementById("score").innerHTML = "Score : " + score;
@@ -74,7 +80,9 @@
         console.log("click jouer");
         //Faut envoyer la difficulté !!!
         console.log(document.getElementById("difficulty").value)
-        socket.emit('jouer', document.getElementById("difficulty").value)};
-        //document.getElementById("btnJouer").style.visibility = "hidden";
-    var name = '';
+        document.getElementById("btnJouer").style.visibility = "hidden"
+        socket.emit('jouer', document.getElementById("difficulty").value)
+    };
+        document.getElementById("taupTable").style.visibility = "visible";
+        
 </script>

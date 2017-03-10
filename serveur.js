@@ -27,6 +27,17 @@ app.get('/images/:photo', function(req, res) {
     });
 });
 
+app.get('/css/:style', function(req, res) {
+ 
+    fs.readFile('./css/' +req.params.style, function(error, content) {
+
+        res.writeHead(200, {"Content-Type": "text/css"});
+
+        res.end(content);
+
+    });
+});
+
 
 
 server.listen(8080);
@@ -134,14 +145,7 @@ io2.sockets.on('connection', function (socket) {
             //~ });  
         //~ }); 
         //~ 
-    });
-    
-	function generateTaup(){
-		actualValue = Math.floor((Math.random() * 16) + 1);
-		socket.emit("newValue", actualValue);
-	}
-	
-	function checkScore(value){
+        function checkScore(value){
 		console.log(value);
 		console.log(actualValue);
 		if (value == actualValue){
@@ -154,6 +158,13 @@ io2.sockets.on('connection', function (socket) {
 		socket.emit("newScore", score);
 		port.write(score);
 	}
+    });
+    
+	function generateTaup(){
+		actualValue = Math.floor((Math.random() * 16) + 1);
+		socket.emit("newValue", actualValue);
+	}
+	
  
 });
 
