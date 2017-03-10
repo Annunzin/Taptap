@@ -124,7 +124,7 @@ io2.sockets.on('connection', function (socket) {
                 //~ console.log("Button " + btnID + " pressed");
                 //~ if (btnID > 0) {
                 //~ // save the data between 'B' and 'E'
-                //~ socketServer.emit('updateScore', 'ZOB' );
+                //~ socketServer.emit('updateScore', 'A' );
                 //~ }
             //~ });  
         //~ }); 
@@ -144,6 +144,8 @@ io2.sockets.on('connection', function (socket) {
 		} else {
 			score -= 5;
 		}
+		console.log("Le score est de : " + score)
+		socket.emit("newScore", score)
 	}
  
 });
