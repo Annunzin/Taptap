@@ -41,7 +41,11 @@ var io2 = io.listen(server);
 io2.sockets.on('connection', function (socket) {
     console.log('Un client est connecté !');
     
-   
+    var score = 0;
+    var actualValue = 0;
+    var value;
+	//Ici on génère toutes les X secondes une nouvelle valeur dans le tableau
+	setInterval(generateTaup, 1000)
     
     socket.emit('message', 'Vous êtes bien connecté, la partie peut commencer !');
     
@@ -55,7 +59,7 @@ io2.sockets.on('connection', function (socket) {
             });
 
         port.on('open', function() {
-          port.write('main screen turn on', function(err) {
+          port.write('OK', function(err) {
             if (err) {
               return console.log('Error on write: ', err.message);
             }
@@ -66,7 +70,32 @@ io2.sockets.on('connection', function (socket) {
         port.on('data',function(data){
             console.log('data received : ');
             console.log(data);
-        });
+            console.log(data.toString);
+            switch (data.toString){
+				case "A":
+					value = 10;
+					break;
+				case "B":
+					value = 11;
+					break;
+				case "C":
+					value = 12;
+					break;
+				case "D":
+					value = 13;
+					break;
+				case "E":
+					value = 14;
+					break;
+ 				case "F":
+					value = 15;
+					break;
+				default:
+					value = data.toString
+			}
+			checkScore(value);
+			
+       });
         
         port.on('disconnect', function(disc){
             console.log("Deconnexion");
@@ -101,6 +130,21 @@ io2.sockets.on('connection', function (socket) {
         //~ }); 
         //~ 
         socket.emit('addPlayer', joueur);
-    }); 
+    });
+    
+	function generateTaup(){
+		actualValue = Math.floor((Math.random() * 10) + 1);
+		socket.emit("newValue", actualValue);
+	}
+	
+	function checkScore(value){
+		if (value == actualValue){
+			score += 20;
+			generateTaup();
+		} else {
+			score -= 5;
+		}
+	}
+ 
 });
 
