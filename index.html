@@ -17,6 +17,32 @@
                <th>Score</th>
            </tr>
         </table>
+        <table id="rankPlayer">
+           <tr>
+               <th><img id="img1" src="images/rondBleu.png"/></th>
+               <th><img id="img2" src="images/rondBleu.png"/></th>
+               <th><img id="img3" src="images/rondBleu.png"/></th>
+               <th><img id="img4" src="images/rondBleu.png"/></th>
+           </tr>
+            <tr>
+               <th><img id="img5" src="images/rondBleu.png"/></th>
+               <th><img id="img6" src="images/rondBleu.png"/></th>
+               <th><img id="img7" src="images/rondBleu.png"/></th>
+               <th><img id="img8" src="images/rondBleu.png"/></th>
+           </tr>
+            <tr>
+               <th><img id="img9" src="images/rondBleu.png"/></th>
+               <th><img id="img10" src="images/rondBleu.png"/></th>
+               <th><img id="img11" src="images/rondBleu.png"/></th>
+               <th><img id="img12" src="images/rondBleu.png"/></th>
+           </tr>
+            <tr>
+               <th><img id="img13" src="images/rondBleu.png"/></th>
+               <th><img id="img14" src="images/rondBleu.png"/></th>
+               <th><img id="img15" src="images/rondBleu.png"/></th>
+               <th><img id="img16" src="images/rondBleu.png"/></th>
+           </tr>
+        </table>
         <img src="images/photo.png"/>
         
     </body>
@@ -24,6 +50,7 @@
 
 <script src="socket.io/socket.io.js"></script>
 <script >
+    var actualValue = 1;
 
     var socket = io.connect('http://127.0.0.1:8080');
     socket.on('message', function(message) {
@@ -33,6 +60,13 @@
     socket.on('addPlayer', function(pseudo) {
         var content = "<tr><th>" + pseudo +"</th><th>0</th></tr>";
         document.getElementById("rankPlayer").innerHTML += content;
+    });
+    
+    socket.on('newValue', function(value){
+       console.log("Nouvelle valeur : "+ value); 
+       document.images["img" + actualValue].src = "images/rondBleu.png";
+       actualValue = value;
+       document.images["img" + value].src = "images/rondRouge.png";
     });
     
     
