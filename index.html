@@ -9,10 +9,16 @@
     <body>
         <h1>Bienvenue dans le jeu du Tauptaup !</h1>
 
-         <input id='pseudo' placeholder='Pseudo'></input>
-        <button onclick="clickPseudo()" id="newPlayer">Jouer</button>
+        <select id="difficulty">
+          <option value="0">Petite bouze</option>
+          <option value="3000">Taupe de jardin</option>
+          <option value="1000">Taupe d'élite</option>
+          <option value="500">Hard-Taupe</option>
+        </select> 
         <p id='score'>Score : 0</p>
-        <table id="rankPlayer">
+        <button onclick="clickJouer()" id="btnJouer">Jouer !</button>
+        
+        <table id="rankPlayer" visible='false'>
            <tr>
                <th><img id="img1" src="images/rondBleu.png"/></th>
                <th><img id="img2" src="images/rondBleu.png"/></th>
@@ -52,11 +58,7 @@
         //~ alert('/!\ Réponse du serveur : ' + message);
         console.log("Message du serveur : " + message)
     });
-    socket.on('addPlayer', function(pseudo) {
-        var content = "<tr><th>" + pseudo +"</th><th>0</th></tr>";
-        document.getElementById("rankPlayer").innerHTML += content;
-    });
-    
+
     socket.on('newValue', function(value){
        console.log("Nouvelle valeur : "+ value); 
        document.images["img" + actualValue].src = "images/rondBleu.png";
@@ -64,13 +66,15 @@
        document.images["img" + value].src = "images/rondRouge.png";
     });
     socket.on('newScore', function(score){
-        getElementById("score").innerHTML = "Score : " + score;
+        document.getElementById("score").innerHTML = "Score : " + score;
     });
     
     
-    clickPseudo = function () {
-        console.log("click joueur");
-        socket.emit('newPlayer', document.getElementById("pseudo").value)};
-    
+    clickJouer = function () {
+        console.log("click jouer");
+        //Faut envoyer la difficulté !!!
+        console.log(document.getElementById("difficulty").value)
+        socket.emit('jouer', document.getElementById("difficulty").value)};
+        //document.getElementById("btnJouer").style.visibility = "hidden";
     var name = '';
 </script>

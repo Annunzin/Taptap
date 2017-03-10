@@ -41,19 +41,23 @@ var io2 = io.listen(server);
 io2.sockets.on('connection', function (socket) {
     console.log('Un client est connecté !');
     
+    var difficulty = 3000;
     var score = 0;
     var actualValue = 0;
-    var value;
+    var value = 0;
 	//Ici on génère toutes les X secondes une nouvelle valeur dans le tableau
-	setInterval(generateTaup, 1000)
-    
+    generateTaup();
     socket.emit('message', 'Vous êtes bien connecté, la partie peut commencer !');
     
     socket.on('clickBtn', function (bouton) {
         console.log('Un bouton a été préssé : le ' + message);
     }); 
-    socket.on('newPlayer', function (joueur) {
-        console.log('Le joueur ' + joueur + ' a rejoinds la partie !');
+    socket.on('jouer', function (difficulty) {
+        console.log("Let's go !");
+        if (difficulty !== "0"){
+			console.log(difficulty);
+			setInterval(generateTaup, difficulty);
+		}
         var port = new SerialPort('COM3',{
             baudrate: 9600
             });
@@ -70,29 +74,30 @@ io2.sockets.on('connection', function (socket) {
         port.on('data',function(data){
             console.log('data received : ');
             console.log(data);
-            console.log(data.toString);
-            switch (data.toString){
+            console.log(data.toString());
+            switch (data.toString()){
 				case "A":
-					value = 10;
-					break;
-				case "B":
 					value = 11;
 					break;
-				case "C":
+				case "B":
 					value = 12;
 					break;
-				case "D":
+				case "C":
 					value = 13;
 					break;
-				case "E":
+				case "D":
 					value = 14;
 					break;
- 				case "F":
+				case "E":
 					value = 15;
 					break;
+ 				case "F":
+					value = 16;
+					break;
 				default:
-					value = data.toString
+					value = parseInt(data.toString()) + 1
 			}
+			console.log(value);
 			checkScore(value);
 			
        });
@@ -129,23 +134,25 @@ io2.sockets.on('connection', function (socket) {
             //~ });  
         //~ }); 
         //~ 
-        socket.emit('addPlayer', joueur);
     });
     
 	function generateTaup(){
-		actualValue = Math.floor((Math.random() * 10) + 1);
+		actualValue = Math.floor((Math.random() * 16) + 1);
 		socket.emit("newValue", actualValue);
 	}
 	
 	function checkScore(value){
+		console.log(value);
+		console.log(actualValue);
 		if (value == actualValue){
 			score += 20;
 			generateTaup();
 		} else {
 			score -= 5;
 		}
-		console.log("Le score est de : " + score)
-		socket.emit("newScore", score)
+		console.log("Le score est de : " + score);
+		socket.emit("newScore", score);
+		port.write(score);
 	}
  
 });
