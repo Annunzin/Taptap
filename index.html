@@ -8,7 +8,7 @@
 
     </head>
 
-    <body>
+    <body onload='init()'>
         <h1 class="title"> </h1>
 		<div class="container">
 		
@@ -18,9 +18,9 @@
           <option value="1000">Taupe d'élite</option>
           <option value="500">Hard-Taupe</option>
         </select> 
-        <p id='score'>Score : 0</p>
+        <div id='score'>Score : 0</div>
         <button onclick="clickJouer()" id="btnJouer">Jouer !</button>
-        
+        <p id='recap'></p>
         <table id="table-game">
            <tr>
                <th><img id="img1" src="images/hole.png"/></th>
@@ -57,32 +57,46 @@
 
 <script src="socket.io/socket.io.js"></script>
 <script >
-    var actualValue = 1;
+    init = function(){
+        var actualValue = 1;
 
-    var socket = io.connect('http://127.0.0.1:8080');
-    socket.on('message', function(message) {
-        //~ alert('/!\ Réponse du serveur : ' + message);
-        console.log("Message du serveur : " + message)
-    });
+        var socket = io.connect('http://127.0.0.1:8080');
+        socket.on('message', function(message) {
+            //~ alert('/!\ Réponse du serveur : ' + message);
+            console.log("Message du serveur : " + message)
+        });
 
-    socket.on('newValue', function(value){
-       console.log("Nouvelle valeur : "+ value); 
-       document.images["img" + actualValue].src = "images/hole.png";
-       actualValue = value;
-       document.images["img" + value].src = "images/holeTaup.png";
-    });
-    socket.on('newScore', function(score){
-        document.getElementById("score").innerHTML = "Score : " + score;
-    });
-    
-    
-    clickJouer = function () {
-        console.log("click jouer");
-        //Faut envoyer la difficulté !!!
-        console.log(document.getElementById("difficulty").value)
-        document.getElementById("btnJouer").style.visibility = "hidden"
-        socket.emit('jouer', document.getElementById("difficulty").value)
-    };
-        document.getElementById("taupTable").style.visibility = "visible";
+        socket.on('newValue', function(value){
+           console.log("Nouvelle valeur : "+ value); 
+           document.images["img" + actualValue].src = "images/hole.png";
+           actualValue = value;
+           document.images["img" + value].src = "images/holeTaup.png";
+        });
+        socket.on('newScore', function(score){
+            document.getElementById("score").innerHTML = "Score : " + score;
+        });
         
+        
+        clickJouer = function () {
+            console.log("click jouer");
+            document.getElementById("recap").style.visibility = "hidden";
+            document.getElementById("table-game").style.visibility = "visible";
+            document.getElementById("btnJouer").style.visibility = "hidden"
+            socket.emit('jouer', document.getElementById("difficulty").value)
+            
+            setTimeout(function(){
+                 socket.emit('finPartie');
+                 document.getElementById("table-game").style.visibility = "hidden";
+                 document.getElementById("btnJouer").style.visibility = "visible";
+                 document.getElementById("btnJouer").innerHTML = "Rejouer";
+            }, 60000);
+            
+            
+        };
+        
+        socket.on('scoreFin', function(score){
+             document.getElementById("recap").innerHTML = "Fin de la partie, </br>Votre score final est de : " + score
+        });
+        document.getElementById("table-game").style.visibility = "hidden";
+    }
 </script>

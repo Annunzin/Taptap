@@ -63,6 +63,12 @@ io2.sockets.on('connection', function (socket) {
     socket.on('clickBtn', function (bouton) {
         console.log('Un bouton a été préssé : le ' + message);
     }); 
+    
+    socket.on('finPartie', function (bouton) {
+        console.log('La partie est finie');
+        socket.emit('scoreFin', score);
+    }); 
+    
     socket.on('jouer', function (difficulty) {
         console.log("Let's go !");
         if (difficulty !== "0"){
