@@ -1,4 +1,4 @@
-var http = require('http');
+﻿var http = require('http');
 var path = require('path');
 var fs = require('fs');
 var SerialPort = require('serialport');
@@ -162,7 +162,12 @@ io2.sockets.on('connection', function (socket) {
 		}
 		console.log("Le score est de : " + score);
 		socket.emit("newScore", score);
-		port.write(score);
+		var tabScore = score.toString().split("");
+		port.write('?')
+		tabScore.forEach(function(c){
+			port.write(c);
+		});
+		//port.write(score);
 	}
     });
     
